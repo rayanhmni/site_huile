@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Huilerie Traditionnelle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const boutons = document.querySelectorAll('.btn-ajouter');
+
+    boutons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const nom = btn.getAttribute('data-produit');
+        const prix = parseFloat(btn.getAttribute('data-prix'));
+
+        let panier = JSON.parse(localStorage.getItem('panier')) || [];
+
+        panier.push({ nom, prix });
+
+        localStorage.setItem('panier', JSON.stringify(panier));
+
+        alert("Produit ajouté au panier !");
+      });
+    });
+  });
+</script>
+
+<header>
+    <h1 class="titre">Huilerie Traditionnelle</h1>
+    <div class="tout_le_bouton">
+      <a href="page_panier.html" class="bouton_panier">
+        <img src="dossier images/icone_panier.png" alt="Panier" class="icone_panier">
+      </a>
+    </div>
+  </header>
+
+  <nav class="huile">
+    <img src="dossier images/image_accueil.jpg" alt="Image Nature" width="600">
+  </nav>
+
+  <main>
+    <section id="presentation">
+      <h2 class="présentation">Qui sommes-nous ?</h2>
+      <div class="paragraphe">
+        <p>Entreprise familiale depuis plusieurs générations, passionnée par la fabrication d'huile artisanale.</p>
+      </div>
+    </section>
+
+    <section id="produits">
+      <h2 class="style">Nos produits</h2>
+      <div class="liste-produits">
+        <div class="carte-produit">
+          <img src="dossier images/huile_olive.jpg" alt="Huile d'olive" class="image-produit">
+          <h3>Huile d'olive vierge</h3>
+          <p>Pressée à froid - 500ml</p>
+          <p class="prix">8,99€</p>
+          <button class="btn-ajouter" data-produit="Huile d'olive - 500ml" data-prix="8,99">Ajouter au panier</button>
+        </div>
+
+        <div class="carte-produit">
+          <img src="dossier images/huile_argan.jpg" alt="Huile d'argan" class="image-produit">
+          <h3>Huile d'argan</h3>
+          <p>Pure et naturelle - 250ml</p>
+          <p class="prix">12,50€</p>
+          <button class="btn-ajouter" data-produit="Huile d'argon - 250ml" data-prix="12,5">Ajouter au panier</button>
+        </div>
+
+        <div class="carte-produit">
+          <img src="dossier images/huile_sésame.jpg" alt="Huile de sésame" class="image-produit">
+          <h3>Huile de sésame</h3>
+          <p>Biologique - 500ml</p>
+          <p class="prix">9,75€</p>
+          <button class="btn-ajouter" data-produit="Huile de sésame - 500ml" data-prix="9,75">Ajouter au panier</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="bas">Concocté par Lui - Since 1825</p>
+  </footer>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const produits = document.querySelectorAll('.carte-produit');
+
+    produits.forEach((produit) => {
+      produit.addEventListener('mouseenter', () => {
+        produit.classList.add('survol-produit');
+      });
+
+      produit.addEventListener('mouseleave', () => {
+        produit.classList.remove('survol-produit');
+      });
+    });
+  });
+</script>
+</body>
+</html>
+
+</body>
+</html>

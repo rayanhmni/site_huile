@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon panier</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .panier-container {
+      padding: 40px;
+      font-family: Calibri;
+      text-align: center;
+    }
+    #liste-panier {
+      list-style: none;
+      padding: 0;
+    }
+    #liste-panier li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-supprimer {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .btn-vider {
+      background-color: #a52a2a;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 24px;
+      color: #6B8E23;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panier-container">
+      <h2>Contenu de votre panier :</h2>
+      <ul id="liste-panier"></ul>
+      <p class="total">Total : <span id="prix-total">0.00</span> €</p>
+      <button class="btn-vider" onclick="viderPanier()">Vider le panier</button><br><br>
+      <a href="huilerie_traditionnelle.html" class="bouton_panier">← Retour à la boutique</a>
+    </section>
+  </main>
+
+  <script>
+    function afficherPanier() {
+      const panier = JSON.parse(localStorage.getItem('panier')) || [];
+      const liste = document.getElementById('liste-panier');
+      const totalSpan = document.getElementById('prix-total');
+
+      liste.innerHTML = '';
+      let total = 0;
+
+      panier.forEach((produit, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${produit.nom} — ${produit.prix.toFixed(2)} €</span>
+          <button class="btn-supprimer" onclick="supprimerProduit(${index})">Supprimer</button>
+        `;
+        liste.appendChild(li);
+        total += produit.prix;
+      });
+
+      totalSpan.textContent = total.toFixed(2);
+    }
+
+    function supprimerProduit(index) {
+      let panier = JSON.parse(localStorage.getItem('panier')) || [];
+      panier.splice(index, 1);
+      localStorage.setItem('panier', JSON.stringify(panier));
+      afficherPanier();
+    }
+
+    function viderPanier() {
+      if (confirm("Êtes-vous sûr de vouloir vider le panier ?")) {
+        localStorage.removeItem('panier');
+        afficherPanier();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', afficherPanier);
+  </script>
+</body>
+</html>
